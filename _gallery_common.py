@@ -10,6 +10,7 @@ import shutil
 import tempfile
 
 import streamlit as st
+from _auth import require_password
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image as XLImage
 from openpyxl.styles import Alignment, Border, Side, Font
@@ -214,6 +215,7 @@ def render_page(preset_key):
     ns = preset_key  # session_state 的 key 前綴，讓不同頁面的狀態互不干擾
 
     st.set_page_config(page_title=f"照片 → {sheet_name} Excel", layout="wide")
+    require_password()
     st.title(f"照片 → {sheet_name} Excel")
 
     slot_count_key = f"{ns}_slot_count"

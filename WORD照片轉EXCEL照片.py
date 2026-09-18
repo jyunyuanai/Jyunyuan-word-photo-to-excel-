@@ -14,6 +14,7 @@ import tempfile
 import hashlib
 
 import streamlit as st
+from _auth import require_password
 from docx import Document
 from docx.table import Table
 from docx.text.paragraph import Paragraph
@@ -482,6 +483,7 @@ def merge_sheet_into_bytes(photos, project_name, site, target_bytes, sheet_name=
 
 # ---------------------------------------------------------------- Streamlit UI
 st.set_page_config(page_title="Word 照片 → 工程隱蔽照片 Excel", layout="wide")
+require_password()
 st.title("Word 施工照片 → 工程隱蔽照片 Excel")
 
 with st.sidebar:
