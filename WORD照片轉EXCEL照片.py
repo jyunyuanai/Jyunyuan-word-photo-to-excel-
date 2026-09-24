@@ -26,7 +26,7 @@ from openpyxl.drawing.xdr import XDRPositiveSize2D
 from openpyxl.utils.units import pixels_to_EMU
 from openpyxl.styles import Alignment, Border, Side, Font
 from openpyxl.utils import get_column_letter
-from PIL import Image
+from PIL import Image, ImageOps
 
 LABELS = {"日期": "date", "檢查項目": "item", "設計值": "design", "實測值": "measured"}
 
@@ -88,6 +88,9 @@ def _to_png(blob):
     try:
         im = Image.open(io.BytesIO(blob))
         im.load()
+        im = ImageOps.exif_transpose(im)
+        if im.height > im.width:
+            im = im.rotate(-90, expand=True)  # 一律輸出橫式
         if im.mode not in ("RGB", "RGBA"):
             im = im.convert("RGB")
         out = io.BytesIO()
